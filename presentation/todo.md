@@ -2,9 +2,11 @@
 
 ## Week of July 17
 
-- [ ] add universal flag for generating Lambda output
+- [x] ~~add universal flag for generating Lambda output~~
 - [ ] add print function
-- [ ] revise randomization function
+- [x] revise validation function
+- [ ] add validation rule for character input
+- [x] revise randomization function
 - [ ] update Episode struct
   - [ ] add new [Quote struct](#quote-struct)
   - [ ] add function for getting characters from quote lines
@@ -30,3 +32,4 @@ type Quote struct {
 - [ ] finish slide deck
 - [ ] prep live demo
 - [ ] build basic GHA automation
+- [ ] add screenshot of finished product to slide 7
