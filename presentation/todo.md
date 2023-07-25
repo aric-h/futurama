@@ -3,18 +3,18 @@
 ## Week of July 17
 
 - [x] ~~add universal flag for generating Lambda output~~
-- [ ] add print function
+- [x] add print function
 - [x] revise validation function
-- [ ] add validation rule for character input
+- [x] add validation rule for character input
 - [x] revise randomization function
-- [ ] update Episode struct
-  - [ ] add new [Quote struct](#quote-struct)
-  - [ ] add function for getting characters from quote lines
-- [ ] revise getSeasonQuotes function
-  - [ ] clean up comments
-  - [ ] move basic token-parsing logic to function
-  - [ ] add function for getting quote characters
-- [ ] add `version` command to display ascii art
+- [x] update Episode struct
+  - [x] add new [Quote struct](#quote-struct)
+  - [x] add function for getting characters from quote lines
+- [x] revise getSeasonQuotes function
+  - [x] clean up comments
+  - [x] move basic token-parsing logic to function
+  - [x] add function for getting quote characters
+- [x] add `version` command to display ascii art
 - [ ] Update `describe episode` to pull from Infosphere
   - [ ] consider adding other links and info
 
@@ -33,3 +33,11 @@ type Quote struct {
 - [ ] prep live demo
 - [ ] build basic GHA automation
 - [ ] add screenshot of finished product to slide 7
+- [ ] populate readme
+- [ ] Update `describe episode` to pull from Infosphere
+  - [ ] consider adding other links and info
+- [ ] figure out logic for character validation
+- [ ] figure out logic for validating combinations
+  - [ ] consider making --all a hidden flag that can only be set with the episode flag
+- [ ] update `getEpisodeQuotes` function to normalize character names before appending to character list
+- [ ] test turning app into lambda
