@@ -16,13 +16,16 @@ var getCmd = &cobra.Command{
   - a random episode in a user-defined season
   - a user-defined episode
   
-  Get a list of episodes from:
+Get a list of episodes from:
   - a user-defined season
-  - the entire series`,
+  - the entire series
+  
+Get a list of supported character names to use with the 'get quote' command  `,
 	Example: `  futurama get quote (no flags = randomized season and episode)
   futurama get quote --episode "Space Pilot 3000"
   futurama get episodes --season 2
-  futurama get episodes -a
+  futurama get episodes --all
+  futurama get characters
   `,
 	Args:      cobra.ExactArgs(1),
 	ValidArgs: []string{"quote", "episode"},

@@ -1,6 +1,8 @@
 package cmd
 
-import "fmt"
+import (
+	"errors"
+)
 
 type SeasonEpisodes struct {
 	name     string
@@ -14,7 +16,12 @@ type Season struct {
 
 type Episode struct {
 	name   string
-	quotes [][]string
+	quotes []Quote
+}
+
+type Quote struct {
+	characters []string
+	lines      []string
 }
 
 func getSeries() [7]SeasonEpisodes {
@@ -188,28 +195,32 @@ func getSeries() [7]SeasonEpisodes {
 	return series
 }
 
-func printQuotes(season Season) {
-	fmt.Print("Season: ")
-	fmt.Println(QuoteSeason)
+func getSupportedCharacters() [8]string {
+	characters := [8]string{
+		"Fry",
+		"Leela",
+		"Bender",
+		"Prof. Farnsworth",
+		"Zoidberg",
+		"Hermes",
+		"Amy",
+		"Zapp Brannigan",
+	}
 
-	if AllQuotes {
-		if QuoteEpisode != "" {
-			fmt.Print("Episode: ")
-			fmt.Println(QuoteEpisode)
-			if QuoteCharacter != "" {
-				// print all quotes from character in episode
-			} else {
-				// print all quotes from episode
-			}
-		} else {
-			if QuoteCharacter != "" {
-				// print all quotes from character in season
-			} else {
-				// print all quotes from season
+	return characters
+}
+
+func validateEpisodeName(episode string) (error, int) {
+
+	series := getSeries()
+	for i, season := range series {
+		for _, ep := range season.episodes {
+			if ep == episode {
+				seasonIndex := i + 1
+				return nil, seasonIndex
 			}
 		}
-	} else {
-		fmt.Print("Episode: ")
-		fmt.Println(QuoteEpisode)
 	}
+
+	return errors.New("Invalid episode name. Please use the `futurama get episodes` command for assistance."), 0
 }

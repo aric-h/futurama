@@ -34,7 +34,6 @@ func init() {
 	episodesCmd.Flags().BoolVarP(&AllEpisodes, "all", "a", false, "Show episodes from all seasons")
 	episodesCmd.Flags().IntVarP(&SeasonNumber, "season", "s", 0, "Season number (1-7)")
 	episodesCmd.MarkFlagsMutuallyExclusive("season", "all")
-	// flag.Parse()
 }
 
 func listEpisodes() error {
