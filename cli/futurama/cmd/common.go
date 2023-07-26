@@ -24,6 +24,11 @@ type Quote struct {
 	lines      []string
 }
 
+type possibleNames struct {
+	normalizedName string
+	alternatives   []string
+}
+
 func getSeries() [7]SeasonEpisodes {
 	series := [7]SeasonEpisodes{
 		{
@@ -224,4 +229,106 @@ func validateEpisodeName(episode string) (error, int) {
 	}
 
 	return errors.New("Invalid episode name. Please use the `futurama get episodes` command for assistance."), 0
+}
+
+func normalizeName(character string) string {
+
+	names := []possibleNames{
+		{
+			normalizedName: "Fry",
+			alternatives: []string{
+				"Fry",
+				"Frydo [Fry]",
+				"Fry:",
+				"Fry-1",
+				"Robo Fry",
+				"Fry as Doingg",
+			},
+		},
+		{
+			normalizedName: "Prof. Farnsworth",
+			alternatives: []string{
+				"Professor Farnsworth",
+				"Prof. Farnsworth",
+				"Farnsworth",
+				"Prof.",
+				"Prof. Farnsworth-1",
+				"Prof. Farnsworth-420",
+				"Prof. Farnsworth-A",
+				"Prof. Farnsworth XVII",
+			},
+		},
+		{
+			normalizedName: "Leela",
+			alternatives: []string{
+				"Leela",
+				"Turanga Leela",
+				"Leela'",
+				"Leela Leela",
+				"Leela as Lady Buggle",
+				"Leela:",
+				"Leela-1",
+			},
+		},
+		{
+			normalizedName: "Amy",
+			alternatives: []string{
+				"Amy",
+				"Amy Wong",
+				"Amy-420",
+				"Amy-1",
+			},
+		},
+		{
+			normalizedName: "Bender",
+			alternatives: []string{
+				"Bender",
+				"Bender-1",
+				"Bender-A",
+				"Bender'",
+				"Bender as Garbly",
+				"Beach-master Bender",
+				"Bass Bender",
+			},
+		},
+		{
+			normalizedName: "Hermes",
+			alternatives: []string{
+				"Hermes",
+				"Hermes Conrad",
+				"Hermes-A",
+				"Hermes-25",
+				"Hermes’ head",
+				"Salmon Hermes",
+				"Seal Hermes",
+			},
+		},
+		{
+			normalizedName: "Zoidberg",
+			alternatives: []string{
+				"Zoidberg",
+				"Dr. Zoidberg",
+				"Zoidberg as Feffernoose",
+				"Lobster Zoidberg",
+				"Booby Zoidberg",
+			},
+		},
+		{
+			normalizedName: "Zapp Brannigan",
+			alternatives: []string{
+				"Zapp Brannigan",
+				"Brannigan",
+			},
+		},
+	}
+
+	for _, n := range names {
+		for _, a := range n.alternatives {
+			if character == a {
+				return n.normalizedName
+			}
+		}
+	}
+
+	return character
 }

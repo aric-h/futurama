@@ -44,3 +44,4 @@ type Quote struct {
 - [ ] test turning app into lambda
   - [ ] or test separate, basic lambda for random quote generation
 - [ ] add `describe character` command with links to wiki, infosphere, and fandom
+- [x] add Zapp Brannigan to supported characters

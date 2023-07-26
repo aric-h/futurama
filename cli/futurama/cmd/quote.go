@@ -34,11 +34,14 @@ var quoteCmd = &cobra.Command{
   - a random episode in a random season
   - a random episode in a user-defined season
   - a user-defined episode
-  - a random episode in a random season from a user-defined character`,
+  - a random episode in a random season from a user-defined character
+  
+  Or get all quotes from a user-defined episode. `,
 	Example: `  futurama get-quote (no flags = randomized season and episode)
   futurama get quote --season 2
   futurama get quote --episode "Space Pilot 3000"
-  futurama get quote --character "Fry"`,
+  futurama get quote --character "Fry"
+  futurama get quote --all --episode "The Series Has Landed"`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := validateInput(cmd.Flags())
 		if err != nil {
@@ -46,8 +49,10 @@ var quoteCmd = &cobra.Command{
 			fmt.Println()
 			cmd.Help()
 		} else {
+			randomize()
+			getQuotes()
 			// quoteLoop()
-			fmt.Println(cmd.Flags().NFlag())
+
 		}
 	},
 }
@@ -57,23 +62,17 @@ func init() {
 	quoteCmd.Flags().IntVarP(&QuoteSeason, "season", "s", 0, "Season number (1-7)")
 	quoteCmd.Flags().StringVarP(&QuoteEpisode, "episode", "e", "", "Episode name (use 'futurama get episodes' command for assistance)")
 	quoteCmd.Flags().StringVarP(&QuoteCharacter, "character", "c", "", "Character name (e.g. 'Fry', 'Bender')")
-	quoteCmd.Flags().BoolVarP(&AllQuotes, "all", "a", false, "Toggle for returning all quotes from a season or episode")
+	quoteCmd.Flags().BoolVarP(&AllQuotes, "all", "a", false, "Toggle for returning all quotes from an episode")
+	// limit flag combos
 	quoteCmd.MarkFlagsMutuallyExclusive("season", "episode")
-}
-
-func validateFlags(flags *pflag.FlagSet) error {
-	// check if multiple flags are set
-	fmt.Println(&flags)
-
-	return nil
+	quoteCmd.MarkFlagsMutuallyExclusive("season", "all")
+	quoteCmd.MarkFlagsMutuallyExclusive("season", "character")
+	quoteCmd.MarkFlagsMutuallyExclusive("character", "all")
+	quoteCmd.MarkFlagsMutuallyExclusive("character", "episode")
 }
 
 func validateInput(flags *pflag.FlagSet) error {
-	// validate number of flags
-	err := validateFlags(flags)
-	if err != nil {
-		return err
-	}
+	var err error
 
 	// validate season number
 	invalidSeason := true
@@ -81,6 +80,10 @@ func validateInput(flags *pflag.FlagSet) error {
 		if i == QuoteSeason {
 			invalidSeason = false
 		}
+	}
+
+	if QuoteSeason == 8 {
+		return errors.New("Season 8 compatibility coming soon! Please select a value from 1-7.")
 	}
 
 	if invalidSeason {
@@ -113,34 +116,9 @@ func validateInput(flags *pflag.FlagSet) error {
 
 	}
 
-	return nil
-}
-
-// func quoteLoop() {
-// 	// capture initial season and episode input in case user-defined character can't be found in randomized episode
-// 	initialEpisodeInput := QuoteEpisode
-// 	initialSeasonInput := QuoteSeason
-
-// quoteLoop:
-// 	for {
-// 		randomize()
-// 		season := getQuotes()
-// 		if QuoteCharacter != "" {
-// 			err := isCharacterPresent(season)
-// 		}
-// 	}
-
-// }
-
-func isCharacterPresent(season Season) error {
-	for _, ep := range season.episodes {
-		for _, quote := range ep.quotes {
-			for _, character := range quote.characters {
-				if character == QuoteCharacter {
-					return nil
-				}
-			}
-		}
+	// validate --all is set with --episode
+	if AllQuotes && QuoteEpisode == "" {
+		return errors.New("The --all flag must be set with the --episode flag.")
 	}
 
 	return nil
@@ -158,7 +136,8 @@ func randomize() {
 	}
 
 	// randomize episode if not specified
-	if QuoteEpisode == "" {
+	// if character is specified, randomize episode later
+	if QuoteEpisode == "" && QuoteCharacter == "" {
 		rand.Seed(time.Now().UnixNano())
 		min := 0
 		max := len(series[QuoteSeason-1].episodes) - 1
@@ -182,7 +161,7 @@ func getQuotes() Season {
 
 	defer resp.Body.Close()
 
-	// printQuotes(season)
+	printQuotes(season)
 	// fmt.Println(season)
 
 	return season
@@ -193,7 +172,6 @@ func getHttpResponse(url string) *http.Response {
 
 	if err != nil {
 		//.Fatalf() prints the error and exits the process
-		// return errors.Newf("error fetching URL: %v\n", err)
 		log.Fatalf("Error fetching WikiQuote URL: %v\n", err)
 	}
 
@@ -274,6 +252,7 @@ findEpisodeName:
 			break findEpisodeName
 		}
 	}
+	// fmt.Println("\n" + ep.name)
 	ep.quotes = getEpisodeQuotes(tokenizer)
 	// fmt.Println(ep)
 	return ep
@@ -316,7 +295,8 @@ findNextQuote:
 							token := tokenizer.Token()
 							line = line + token.Data
 							if speaker {
-								quote.characters = append(quote.characters, token.Data)
+								character := normalizeName(token.Data)
+								quote.characters = append(quote.characters, character)
 								speaker = false
 							}
 						case html.EndTagToken:
@@ -343,8 +323,8 @@ findNextQuote:
 	for _, x := range episodeQuotes {
 		unique.Sort(unique.StringSlice{&x.characters})
 		unique.Strings(&x.characters)
-		fmt.Println(x.characters)
-		fmt.Println(x.lines)
+		// fmt.Println(x.characters)
+		// fmt.Println(x.lines)
 	}
 	return episodeQuotes
 }
@@ -383,27 +363,107 @@ episodeLoop:
 }
 
 func printQuotes(season Season) {
+	var ep Episode
+
 	fmt.Print("Season: ")
 	fmt.Println(QuoteSeason)
 
-	if AllQuotes {
-		if QuoteEpisode != "" {
-			fmt.Print("Episode: ")
-			fmt.Println(QuoteEpisode)
-			if QuoteCharacter != "" {
-				// print all quotes from character in episode
-			} else {
-				// print all quotes from episode
-			}
-		} else {
-			if QuoteCharacter != "" {
-				// print all quotes from character in season
-			} else {
-				// print all quotes from season
-			}
-		}
-	} else {
+	// find and print quote from character
+	if QuoteCharacter != "" {
+		// get subset of episodes with character present
+		subset := getCharacterEpisodes(season)
+		// for _, e := range subset.episodes {
+		// 	fmt.Println(e.name)
+		// 	for _, q := range e.quotes {
+		// 		fmt.Println()
+		// 		fmt.Println(q.characters)
+		// 		for _, l := range q.lines {
+		// 			fmt.Println(l)
+		// 		}
+		// 	}
+		// }
+
+		// re-randomize episode
+		epIndex := randomIndex(len(subset.episodes) - 1)
+		QuoteEpisode = subset.episodes[epIndex].name
+
 		fmt.Print("Episode: ")
 		fmt.Println(QuoteEpisode)
+		fmt.Println()
+
+		// get random quote
+		qIndex := randomIndex(len(subset.episodes[epIndex].quotes) - 1)
+		for _, line := range subset.episodes[epIndex].quotes[qIndex].lines {
+			fmt.Println(line)
+		}
+
+	} else if AllQuotes { // print all quotes from an episode
+		fmt.Print("Episode: ")
+		fmt.Println(QuoteEpisode)
+		fmt.Println()
+
+		ep = getEpisodeObject(season)
+		for _, q := range ep.quotes {
+			for _, line := range q.lines {
+				fmt.Println(line)
+			}
+			fmt.Println("----")
+		}
+
+	} else { // season/episode have either been set or randomized
+		fmt.Print("Episode: ")
+		fmt.Println(QuoteEpisode)
+		fmt.Println()
+
+		ep = getEpisodeObject(season)
+		qIndex := randomIndex(len(ep.quotes) - 1)
+		for _, line := range ep.quotes[qIndex].lines {
+			fmt.Println(line)
+		}
 	}
+
+}
+
+func getCharacterEpisodes(season Season) Season {
+	subset := Season{
+		name: season.name,
+	}
+
+	// loop through episodes to find onew with QuoteCharacter
+	for _, ep := range season.episodes {
+		subsetEp := Episode{name: ep.name}
+		for _, q := range ep.quotes {
+			for _, n := range q.characters {
+				if n == QuoteCharacter {
+					subsetEp.quotes = append(subsetEp.quotes, q)
+				}
+			}
+		}
+		if len(subsetEp.quotes) > 0 {
+			subset.episodes = append(subset.episodes, subsetEp)
+		}
+	}
+	// fmt.Println(subset)
+	return subset
+}
+
+func getEpisodeObject(season Season) Episode {
+	for _, ep := range season.episodes {
+		if ep.name == QuoteEpisode {
+			return ep
+		}
+	}
+
+	return Episode{
+		name:   "Error",
+		quotes: []Quote{{characters: []string{}, lines: []string{"error: no quotes found"}}},
+	}
+}
+
+func randomIndex(max int) int {
+	rand.Seed(time.Now().UnixNano())
+	min := 0
+	randIndex := rand.Intn(max-min+1) + min
+
+	return randIndex
 }
