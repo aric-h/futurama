@@ -214,9 +214,10 @@ func validateEpisodeName(episode string) (error, int) {
 
 	series := getSeries()
 	for i, season := range series {
-		for _, ep := range season.episodes {
+		for x, ep := range season.episodes {
 			if ep == episode {
 				seasonIndex := i + 1
+				EpisodeIndex = x + 1
 				return nil, seasonIndex
 			}
 		}

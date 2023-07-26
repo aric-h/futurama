@@ -34,10 +34,13 @@ type Quote struct {
 - [ ] build basic GHA automation
 - [ ] add screenshot of finished product to slide 7
 - [ ] populate readme
-- [ ] Update `describe episode` to pull from Infosphere
-  - [ ] consider adding other links and info
+- [x] Update `describe episode` to pull from Infosphere
+  - [x] consider adding other links and info
+- [x] revert back to wikipedia for `describe episode`; add links to wikipedia, infosphere. and fandom
 - [ ] figure out logic for character validation
 - [ ] figure out logic for validating combinations
   - [ ] consider making --all a hidden flag that can only be set with the episode flag
 - [ ] update `getEpisodeQuotes` function to normalize character names before appending to character list
 - [ ] test turning app into lambda
+  - [ ] or test separate, basic lambda for random quote generation
+- [ ] add `describe character` command with links to wiki, infosphere, and fandom

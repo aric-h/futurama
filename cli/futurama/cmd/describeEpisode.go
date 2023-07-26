@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -13,6 +14,7 @@ import (
 
 var DescribeEpisodeName string
 var SeasonIndex int
+var EpisodeIndex int
 
 var describeEpisodeCmd = &cobra.Command{
 	Use:   "episode",
@@ -46,60 +48,58 @@ func describeEpisode() {
 	if DescribeEpisodeName == "A Farewell to Arms" {
 		urlEpisodeName = urlEpisodeName + "_(Futurama)"
 	}
-	wikiUrl := "https://en.wikipedia.org/wiki/" + urlEpisodeName
-	infosphereUrl := "https://theinfosphere.org/" + urlEpisodeName
-	resp = getHttpResponse(wikiUrl)
+
+	resp = getHttpResponse("https://en.wikipedia.org/wiki/" + urlEpisodeName)
 	defer resp.Body.Close()
 
 	tokenizer := html.NewTokenizer(resp.Body)
-	description := []string{}
-	fmt.Println("starting wiki loop")
-infosphereLoop:
+	plot := []string{}
+wikiLoop:
 	for { // loop until
 		switch tokenizer.Next() {
 		case html.ErrorToken:
 			err := tokenizer.Err()
 			if err == io.EOF {
-				break infosphereLoop //end of the file, break out of the loop
+				break wikiLoop //end of the file, break out of the loop
 			}
 			log.Fatalf("error tokenizing HTML: %v", tokenizer.Err())
-		case html.EndTagToken:
+		case html.StartTagToken:
 			token := tokenizer.Token()
-			if "table" == token.Data {
-				fmt.Println("found table tag")
-				switch tokenizer.Next() {
-				case html.ErrorToken:
-					err := tokenizer.Err()
-					if err == io.EOF {
-						break infosphereLoop //end of the file, break out of the loop
-					}
-					log.Fatalf("error tokenizing HTML: %v", tokenizer.Err())
-				case html.StartTagToken:
-					token := tokenizer.Token()
-					fmt.Println(token.Data)
-					if "p" == token.Data { // start of description section
-						fmt.Println("found description section")
-						descLine := ""
+			if "span" == token.Data {
+				for _, attr := range token.Attr {
+					if attr.Val == "Plot" { // found plot section
 						for {
 							switch tokenizer.Next() {
 							case html.ErrorToken:
 								err := tokenizer.Err()
 								if err == io.EOF {
-									break infosphereLoop //end of the file, break out of the loop
+									break wikiLoop //end of the file, break out of the loop
 								}
-								log.Fatalf("error tokenizing HTML: %v", tokenizer.Err())
-							case html.TextToken: // assemble text of episode description
-								token := tokenizer.Token()
-								descLine = descLine + token.Data
 							case html.StartTagToken:
 								token := tokenizer.Token()
-								if "p" == token.Data { // new paragraph; start new descLine
-									description = append(description, descLine)
-									fmt.Println(descLine)
-									descLine = ""
-								} else if "div" == token.Data { // end of description section
-									description = append(description, descLine)
-									break infosphereLoop
+								if "p" == token.Data || "h3" == token.Data { // start of plot paragraph
+									para := ""
+								paragraphLoop:
+									for {
+										switch tokenizer.Next() {
+										case html.ErrorToken:
+											err := tokenizer.Err()
+											if err == io.EOF {
+												break wikiLoop // end of the file, break out of the loop
+											}
+										case html.TextToken:
+											token := tokenizer.Token()
+											para = para + string(token.Data) // append plot text
+										case html.EndTagToken:
+											token := tokenizer.Token()
+											if "p" == token.Data || "h3" == token.Data {
+												plot = append(plot, para)
+												break paragraphLoop
+											}
+										}
+									}
+								} else if "h2" == token.Data { // end of plot section
+									break wikiLoop
 								}
 							}
 						}
@@ -109,19 +109,35 @@ infosphereLoop:
 		}
 	}
 
-	printDescription(description, infosphereUrl)
+	// remove edit links
+	editEx := regexp.MustCompile(`\[edit\]`)
+	for i, para := range plot {
+		plot[i] = editEx.ReplaceAllString(para, "")
+	}
+
+	printDescription(plot, urlEpisodeName)
 
 }
 
-func printDescription(description []string, url string) {
+func printDescription(plot []string, urlEpisodeName string) {
+	fmt.Println("\nINFO")
+	fmt.Println("----")
 	fmt.Print("Season: ")
 	fmt.Println(SeasonIndex)
 	fmt.Print("Episode: ")
+	fmt.Println(EpisodeIndex)
+	fmt.Print("Title: ")
 	fmt.Println(DescribeEpisodeName)
+
+	fmt.Println("\nPLOT")
 	fmt.Println("----")
-	for _, line := range description {
+	for _, line := range plot {
 		fmt.Println(line)
 	}
+
+	fmt.Println("LINKS")
 	fmt.Println("----")
-	fmt.Println(url)
+	fmt.Println("https://en.wikipedia.org/wiki/" + urlEpisodeName)
+	fmt.Println("https://theinfosphere.org/" + urlEpisodeName)
+	fmt.Println("https://futurama.fandom.com/wiki/" + urlEpisodeName)
 }
