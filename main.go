@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "futurama/cmd"
+import "github.com/aric-h/futurama/cmd"
 
 func main() {
 	cmd.Execute()
