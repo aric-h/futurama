@@ -21,17 +21,22 @@
   - example of getting individual quote lines
 - overview of data structures
 - overview of hardcoded episode data
+- overview of main character normalization
 
 ### additional CLI functionality
 
 - adding flags for specifying season/episode
 - adding flag for specifying character
 - adding command for listing episodes
+- adding command for listing characters
 - adding command for describing episodes
+- adding command for describing characters
 
 ### CLI conclusion
 
 - examples of usage
+- challenges
+- areas for improvement
 - Q&A before second half
 
 ### slash command overview
