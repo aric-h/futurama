@@ -20,3 +20,9 @@ cd futurama
 cobra-cli add get
 cobra-cli add quote -p 'getCmd'
 ```
+
+## futurama installation
+
+```bash
+go install github.com/aric-h/futurama@latest
+```

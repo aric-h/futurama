@@ -46,4 +46,4 @@ type Quote struct {
 - [ ] add `describe character` command with links to wiki, infosphere, and fandom
 - [x] add Zapp Brannigan to supported characters
 - [ ] add colorization to main characters' names in quote output
-- [ ] overhaul repo structure
+- [x] overhaul repo structure
