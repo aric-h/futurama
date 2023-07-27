@@ -32,16 +32,18 @@ type Quote struct {
 - [ ] finish slide deck
 - [ ] prep live demo
 - [ ] build basic GHA automation
-- [ ] add screenshot of finished product to slide 7
+- [x] add screenshot of finished product to slide 7
 - [ ] populate readme
 - [x] Update `describe episode` to pull from Infosphere
   - [x] consider adding other links and info
 - [x] revert back to wikipedia for `describe episode`; add links to wikipedia, infosphere. and fandom
-- [ ] figure out logic for character validation
-- [ ] figure out logic for validating combinations
-  - [ ] consider making --all a hidden flag that can only be set with the episode flag
-- [ ] update `getEpisodeQuotes` function to normalize character names before appending to character list
+- [x] figure out logic for character validation
+- [x] figure out logic for validating combinations
+  - [x] consider making --all a hidden flag that can only be set with the episode flag
+- [x] update `getEpisodeQuotes` function to normalize character names before appending to character list
 - [ ] test turning app into lambda
   - [ ] or test separate, basic lambda for random quote generation
 - [ ] add `describe character` command with links to wiki, infosphere, and fandom
 - [x] add Zapp Brannigan to supported characters
+- [ ] add colorization to main characters' names in quote output
+- [ ] overhaul repo structure
