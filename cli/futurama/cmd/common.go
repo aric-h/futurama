@@ -256,6 +256,7 @@ func normalizeName(character string) string {
 				"Prof. Farnsworth-420",
 				"Prof. Farnsworth-A",
 				"Prof. Farnsworth XVII",
+				"Professor Hubert Farnsworth",
 			},
 		},
 		{

@@ -42,7 +42,7 @@ func listEpisodes() error {
 		for _, season := range series {
 			fmt.Println("#### " + season.name + " ####")
 			for _, ep := range season.episodes {
-				fmt.Print("- " + ep + "\n")
+				fmt.Print(ep + "\n")
 			}
 			fmt.Println()
 		}
@@ -51,7 +51,7 @@ func listEpisodes() error {
 		if SeasonNumber > 0 && SeasonNumber < 8 {
 			fmt.Println("#### " + series[SeasonNumber-1].name + " ####")
 			for _, ep := range series[SeasonNumber-1].episodes {
-				fmt.Print("- " + ep + "\n")
+				fmt.Print(ep + "\n")
 			}
 			return nil
 		} else {

@@ -36,7 +36,8 @@ plot synopses of episodes.
 Quotes can be retrieved from:
   - a random episode in a random season
   - a random episode in a user-defined season
-  - a user-defined episode in a user-defined season `,
+  - a user-defined episode
+  - a random episode in a random season from a user-defined character `,
 }
 
 func Execute() {
