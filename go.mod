@@ -1,4 +1,4 @@
-module futurama
+module github.com/aric-h/futurama
 
 go 1.20
 
