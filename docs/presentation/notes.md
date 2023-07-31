@@ -32,11 +32,18 @@
 - adding command for describing episodes
 - adding command for describing characters
 
+### basic GHA automation
+
+- overview of build pipeline
+
 ### CLI conclusion
 
 - examples of usage
 - challenges
 - areas for improvement
+- installation instructions
+  - binary download
+  - `go install`
 - Q&A before second half
 
 ### slash command overview

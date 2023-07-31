@@ -31,19 +31,30 @@ type Quote struct {
 
 - [ ] finish slide deck
 - [ ] prep live demo
-- [ ] build basic GHA automation
+- [x] build basic GHA automation
 - [x] add screenshot of finished product to slide 7
 - [ ] populate readme
-- [x] Update `describe episode` to pull from Infosphere
+- [x] ~~Update `describe episode` to pull from Infosphere~~
   - [x] consider adding other links and info
 - [x] revert back to wikipedia for `describe episode`; add links to wikipedia, infosphere. and fandom
 - [x] figure out logic for character validation
 - [x] figure out logic for validating combinations
   - [x] consider making --all a hidden flag that can only be set with the episode flag
 - [x] update `getEpisodeQuotes` function to normalize character names before appending to character list
-- [ ] test turning app into lambda
-  - [ ] or test separate, basic lambda for random quote generation
+- [x] test turning app into lambda
+  - [x] or test separate, basic lambda for random quote generation
 - [ ] add `describe character` command with links to wiki, infosphere, and fandom
 - [x] add Zapp Brannigan to supported characters
 - [ ] add colorization to main characters' names in quote output
 - [x] overhaul repo structure
+- [ ] add retry functionality if WikiQuote 404s
+- [ ] update `get quote` to return season and call prinQuote separately
+- [ ] create basic TF for API gateway and lambda
+
+## July 31 & August 1
+
+- [x] add retry functionality if WikiQuote 404s
+- [x] update `get quote` to return season and call printQuote separately
+- [ ] create basic TF for API gateway and lambda
+- [ ] create slack app and request installation rights in BSC workspace
+- [ ] add colorization to main characters' names in quote output
