@@ -54,7 +54,7 @@ type Quote struct {
 ## July 31 & August 1
 
 - [x] add retry functionality if WikiQuote 404s
-- [ ] update `get quote` to return season and call prinQuote separately
+- [x] update `get quote` to return season and call printQuote separately
 - [ ] create basic TF for API gateway and lambda
 - [ ] create slack app and request installation rights in BSC workspace
 - [ ] add colorization to main characters' names in quote output
