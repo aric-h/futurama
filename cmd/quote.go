@@ -50,9 +50,8 @@ var quoteCmd = &cobra.Command{
 			cmd.Help()
 		} else {
 			randomize()
-			getQuotes()
-			// quoteLoop()
-
+			season := getQuotes()
+			printQuotes(season)
 		}
 	},
 }
@@ -136,8 +135,8 @@ func randomize() {
 	}
 
 	// randomize episode if not specified
-	// if character is specified, randomize episode later
-	if QuoteEpisode == "" && QuoteCharacter == "" {
+	// if character is specified, this will be re-randomized later
+	if QuoteEpisode == "" {
 		rand.Seed(time.Now().UnixNano())
 		min := 0
 		max := len(series[QuoteSeason-1].episodes) - 1
@@ -161,9 +160,6 @@ func getQuotes() Season {
 
 	defer resp.Body.Close()
 
-	printQuotes(season)
-	// fmt.Println(season)
-
 	return season
 }
 
@@ -178,6 +174,7 @@ func getHttpResponse(url string) *http.Response {
 		if err == nil && resp.StatusCode == http.StatusOK && strings.HasPrefix(ctype, "text/html") {
 			break
 		}
+		time.Sleep(time.Duration(i) * time.Second)
 	}
 
 	if err != nil {
