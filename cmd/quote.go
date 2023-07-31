@@ -168,7 +168,17 @@ func getQuotes() Season {
 }
 
 func getHttpResponse(url string) *http.Response {
-	resp, err := http.Get(url)
+	var resp *http.Response
+	var err error
+
+	for i := 0; i < 5; i++ { // retry in case of bad response (mainly 404)
+		resp, err = http.Get(url)
+		ctype := resp.Header.Get("Content-Type")
+
+		if err == nil && resp.StatusCode == http.StatusOK && strings.HasPrefix(ctype, "text/html") {
+			break
+		}
+	}
 
 	if err != nil {
 		//.Fatalf() prints the error and exits the process
@@ -372,16 +382,6 @@ func printQuotes(season Season) {
 	if QuoteCharacter != "" {
 		// get subset of episodes with character present
 		subset := getCharacterEpisodes(season)
-		// for _, e := range subset.episodes {
-		// 	fmt.Println(e.name)
-		// 	for _, q := range e.quotes {
-		// 		fmt.Println()
-		// 		fmt.Println(q.characters)
-		// 		for _, l := range q.lines {
-		// 			fmt.Println(l)
-		// 		}
-		// 	}
-		// }
 
 		// re-randomize episode
 		epIndex := randomIndex(len(subset.episodes) - 1)
