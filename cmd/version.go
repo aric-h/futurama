@@ -11,7 +11,7 @@ import (
 )
 
 // go run -ldflags "-X futurama/cmd.Version=x.x.x" main.go version
-var Version string = "v0.1.X" // set to git tag during automated build
+var Version string = "v2.0.0" // set to git tag during automated build
 
 // getCmd represents the get command
 var versionCmd = &cobra.Command{
