@@ -30,7 +30,7 @@
 - adding command for listing episodes
 - adding command for listing characters
 - adding command for describing episodes
-- adding command for describing characters
+- ~~adding command for describing characters~~
 
 ### basic GHA automation
 
@@ -67,3 +67,8 @@
 - CLI installation review
 - slash command installation review
 - Q&A
+
+## Tabs to have open
+
+- [WikiQuote](https://en.wikiquote.org/wiki/Futurama/Season_1)
+- [code repo](https://github.com/aric-h/futurama)
