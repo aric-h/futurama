@@ -41,6 +41,7 @@ Required flag:
 ## Installation
 
 If you have Go installed:
+
 ```bash
 go install github.com/aric-h/futurama@latest
 ```
