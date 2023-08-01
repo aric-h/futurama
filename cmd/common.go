@@ -57,7 +57,7 @@ func getSeries() [7]SeasonEpisodes {
 				"A Head in the Polls",
 				"Xmas Story",
 				"Why Must I Be a Crustacean in Love?",
-				"Lesser of Two Evils",
+				"The Lesser of Two Evils",
 				"Put Your Head on my Shoulders",
 				"Raging Bender",
 				"A Bicyclops Built For Two",
