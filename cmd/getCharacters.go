@@ -26,7 +26,7 @@ func init() {
 func listSupportedCharacters() {
 	supportedCharacters := getSupportedCharacters()
 
-	fmt.Println()
+	fmt.Println("Supported Characters:")
 	for _, c := range supportedCharacters {
 		fmt.Println(c)
 	}

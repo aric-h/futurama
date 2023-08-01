@@ -34,7 +34,7 @@ var quoteCmd = &cobra.Command{
   - a random episode in a random season
   - a random episode in a user-defined season
   - a user-defined episode
-  - a random episode in a random season from a user-defined character
+  - a random episode in a random season from a user-defined character (use 'get characters' for assistance)
   
   Or get all quotes from a user-defined episode. `,
 	Example: `  futurama get-quote (no flags = randomized season and episode)
@@ -445,8 +445,14 @@ func getCharacterEpisodes(season Season) Season {
 }
 
 func getEpisodeObject(season Season) Episode {
+	// catch episode names that are incorrect on WikiQuote
+	misnamedEpisode := ""
+	if QuoteEpisode == "The Lesser of Two Evils" {
+		misnamedEpisode = "Lesser of Two Evils"
+	}
+
 	for _, ep := range season.episodes {
-		if ep.name == QuoteEpisode {
+		if ep.name == QuoteEpisode || ep.name == misnamedEpisode {
 			return ep
 		}
 	}

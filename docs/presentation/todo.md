@@ -58,3 +58,7 @@ type Quote struct {
 - [ ] create basic TF for API gateway and lambda
 - [ ] create slack app and request installation rights in BSC workspace
 - [ ] add colorization to main characters' names in quote output
+- [x] update readme
+- [x] update command help text
+- [x] publish new release
+- [x] fix wikipedia URL for Lesser of Two Evils

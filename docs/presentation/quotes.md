@@ -22,8 +22,8 @@ Zapp Brannigan: The key to victory is discipline, and that means a well made bed
 Fry: You mean while I'm sleeping in it?
 Zapp Brannigan: You won't have time for sleeping, soldier, not with all the bed making you'll be doing.
 
-Voice on T.V.: Is today's hectic lifestyle making you tense and impatient?
-Bender: Shut up and get to the point!
+Voice on T.V.: Is today's hectic lifestyle making you tense and impatient?~~
+Bender: Shut up and get to the point!~~
 
 Prof. Farnsworth: I still don't understand why you wouldn't let me graft a laser cannon on your chest, to crush those who disobey you! But I guess we're just two different people.
 
@@ -33,7 +33,7 @@ Prof. Farnsworth: This is uncomfortable and humiliating. Now if they were to mak
 
 ~~Hermes: Without machines, who will feed us and clothe us and compose our smooth jazz?~~
 
-Zapp Brannigan: Dammit, Kif! Where's the little umbrella? That's what makes it as scotch on the rocks.
+~~Zapp Brannigan: Dammit, Kif! Where's the little umbrella? That's what makes it as scotch on the rocks.~~
 
 Calculon: I was all of history's great robot actors: Acting Unit 0.8, Thespomat, David Duchovny!
 
@@ -59,11 +59,11 @@ That Guy: There are two kinds of people: sheep and sharks. Anyone who is a sheep
 Dr. Zoidberg: Errr, excuse me... which is the one people like to hug?
 That Guy: Gutsy question. You're a shark.
 
-Attila the Hun: Stop! No shoot fire stick in space canoe! Cause explosive decompression!
-Zapp Brannigan: Spare me your space age technobabble, Attila the Hun!
+~~Attila the Hun: Stop! No shoot fire stick in space canoe! Cause explosive decompression!~~
+~~Zapp Brannigan: Spare me your space age technobabble, Attila the Hun!~~
 
-Amy: Spirit! Kif, that's the pony I always wanted but my parents said I had too many ponies already.
-Kif: Yes, I programmed it in for you. Four million lines of BASIC.
+~~Amy: Spirit! Kif, that's the pony I always wanted but my parents said I had too many ponies already.~~
+~~Kif: Yes, I programmed it in for you. Four million lines of BASIC.~~
 
 Lrrr: This is ancient Earth's most foolish program. Why does Ross, the largest friend, not simply eat the other five?
 
@@ -87,7 +87,7 @@ Fry: Uh, I can explain that. See, it used to be milk and, well, time makes fools
 
 ~~Number 1.0: Don't quote regulation to me! I co-chaired the committee that reviewed the recommendation to revise the color of the book that regulation is in. We kept it gray.~~
 
-~~Prof. Farnsworth: Ah the exact center of the Atlantic Ocean, this seems the logical place for fish to congregate.~~
+Prof. Farnsworth: Ah the exact center of the Atlantic Ocean, this seems the logical place for fish to congregate.
 
 Fry: Every time something good happens to me you say it's some kind of madness or I'm drunk or I ate too much candy. Well I saw a real mermaid. And I wish for once my friends would have decency and kindness to believe me.
 Leela: [whispers to Farnsworth] Ocean madness.
@@ -98,7 +98,7 @@ Prof. Farnsworth: He may have ocean madness, but that's no excuse for ocean rude
 
 ## transitions
 
-Tinny Tim: Extra! Extra! World's greatest opera only half over.
+~~Tinny Tim: Extra! Extra! World's greatest opera only half over.~~
 
 ## q&a
 

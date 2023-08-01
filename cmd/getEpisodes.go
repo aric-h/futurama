@@ -17,7 +17,8 @@ var episodesCmd = &cobra.Command{
 	Use:   "episodes",
 	Short: "Get list of episodes from series or season",
 	Long:  "Get list of all episodes or only episodes for a given season",
-	Example: `  futurama get episodes --all
+	Example: `  futurama get episodes (return all episodes if no flags provided)
+  futurama get episodes --all
   futurama get episodes --season 2`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := listEpisodes()
@@ -31,12 +32,16 @@ var episodesCmd = &cobra.Command{
 
 func init() {
 	getCmd.AddCommand(episodesCmd)
-	episodesCmd.Flags().BoolVarP(&AllEpisodes, "all", "a", false, "Show episodes from all seasons")
+	episodesCmd.Flags().BoolVarP(&AllEpisodes, "all", "a", true, "Show episodes from all seasons")
 	episodesCmd.Flags().IntVarP(&SeasonNumber, "season", "s", 0, "Season number (1-7)")
 	episodesCmd.MarkFlagsMutuallyExclusive("season", "all")
 }
 
 func listEpisodes() error {
+	if SeasonNumber != 0 { // if season provided, turn off default -a flag
+		AllEpisodes = false
+	}
+
 	series := getSeries()
 	if AllEpisodes {
 		for _, season := range series {
@@ -47,7 +52,7 @@ func listEpisodes() error {
 			fmt.Println()
 		}
 		return nil
-	} else if SeasonNumber != 0 {
+	} else {
 		if SeasonNumber > 0 && SeasonNumber < 8 {
 			fmt.Println("#### " + series[SeasonNumber-1].name + " ####")
 			for _, ep := range series[SeasonNumber-1].episodes {
@@ -57,7 +62,5 @@ func listEpisodes() error {
 		} else {
 			return errors.New("Invalid season number")
 		}
-	} else {
-		return errors.New("Invalid command flags")
 	}
 }

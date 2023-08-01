@@ -19,7 +19,7 @@ var EpisodeIndex int
 var describeEpisodeCmd = &cobra.Command{
 	Use:   "episode",
 	Short: "Describe a Futurama episode (powered by Wikipedia)",
-	Long:  "Describe the plot of a given Futurama episode",
+	Long:  "Describe the plot of a user-defined Futurama episode",
 	Example: `  futurama describe episode --name "Space Pilot 3000"
   `,
 	// Args: cobra.ExactArgs(1),
@@ -38,7 +38,7 @@ var describeEpisodeCmd = &cobra.Command{
 
 func init() {
 	describeCmd.AddCommand(describeEpisodeCmd)
-	describeEpisodeCmd.Flags().StringVarP(&DescribeEpisodeName, "name", "n", "", "Episode name (use list-episodes command for assistance)")
+	describeEpisodeCmd.Flags().StringVarP(&DescribeEpisodeName, "name", "n", "", "Episode name (use `futurama get episodes` command for assistance)")
 }
 
 func describeEpisode() {

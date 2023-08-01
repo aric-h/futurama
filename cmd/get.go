@@ -15,6 +15,7 @@ var getCmd = &cobra.Command{
   - a random episode in a random season
   - a random episode in a user-defined season
   - a user-defined episode
+  - a random episode in a random season from a user-defined character
   
 Get a list of episodes from:
   - a user-defined season
